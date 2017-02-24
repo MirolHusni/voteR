@@ -103,7 +103,7 @@ router.post('/:pollId', function (req, res) {
 function submitVote(field, res,ip) {
     Poll.findOneAndUpdate(
         { choices: { $elemMatch: { title: field } } },
-        { $inc: { 'choices.$.count': 1 }, $addToSet: { 'votedIp': 'Some ip' } },
+        { $inc: { 'choices.$.count': 1 }, $addToSet: { 'votedIp': ip } },
         { new: true },
         function (err, poll) {
             if (err) throw err;
