@@ -93,7 +93,6 @@ body{
 .about{
     background-image:url('./bgg.jpg');
     overflow: auto;
-    height:100vh;
     overflow-y: hidden;
 }
 
