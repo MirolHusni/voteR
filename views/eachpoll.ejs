@@ -39,10 +39,12 @@
                 let colorsArray = addColor();
     
                 let data = <%- JSON.stringify(thisPoll.choices) %>; 
-                let id =  <%- JSON.stringify(thisPoll._id) %>               
-         
+                let id =  <%- JSON.stringify(thisPoll._id) %>   
+
+    
+            
                 $('.choice-container p').click(function(){
-                
+               
                     $.ajax({
                         url: '/polls/' + id,
                         type: 'PUT',

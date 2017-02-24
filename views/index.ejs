@@ -14,30 +14,36 @@
         <%include nav.ejs %>
             <section class="about">
                 <div class="main-aligner">
-                    <div class="about-intro">
-                        <i id="bar-logo" class="fa fa-2x fa-bar-chart" aria-hidden="true"></i>
-                        <h1>voteR</h1>
-                        <h2>Voting in realtime.</h2>
-                        <p>
-                            voteR is a web-based application that enables you to vote on various polls, create your own custom polls, and share them
-                            with your friends. You can view the results in realtime! This application uses Node.js and Express.js
-                            on the back-end, and HTML5, CSS3, jQuery, and Chart.js on the front-end.
-                        </p>
-                        <div class="btn-container">
-                            <% if(authenticated){ %>
-                                <a href="/mypolls">My Polls</a>
-                                <span>or</span>
-                                <a href="/polls">View Polls</a>
-                                <% }else{ %>
-                                    <a href="/signup">Get Started</a>
+                    <div class="pic-intro-container">
+                        <div class="about-intro">
+                            <i id="bar-logo" class="fa fa-2x fa-bar-chart" aria-hidden="true"></i>
+                            <h1>voteR</h1>
+                            <h2>Voting in realtime.</h2>
+                            <p>
+                                voteR is a web-based application that enables you to vote on various polls, create your own custom polls, and share them
+                                with your friends. You can view the results in realtime! This application uses Node.js and
+                                Express.js on the back-end, and HTML5, CSS3, jQuery, and Chart.js on the front-end.
+                            </p>
+                            <div class="btn-container">
+                                <% if(authenticated){ %>
+                                    <a href="/mypolls">My Polls</a>
                                     <span>or</span>
                                     <a href="/polls">View Polls</a>
-                                    <%}%>
+                                    <% }else{ %>
+                                        <a href="/signup">Get Started</a>
+                                        <span>or</span>
+                                        <a href="/polls">View Polls</a>
+                                        <%}%>
+                            </div>
+                        </div>
+
+
+                        <div class="about-pic">
+                            <img src="placeholder.png">
                         </div>
                     </div>
-                    <div class="about-pic">
-                        <img src="placeholder.png">
-                    </div>
+                </div>
+
                 </div>
             </section>
     </div>

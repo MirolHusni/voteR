@@ -26,7 +26,7 @@ db.once('open', function () {
 app.set('view engine', 'ejs');
 
 //Middleware
-app.use(express.static('public'))
+app.use(express.static('public'));
 app.use(session({
   cookieName: 'session',
   secret: 'asfasFHDFDHJDFJr5e4rwrsefzawq4',

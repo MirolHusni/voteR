@@ -58,12 +58,10 @@ router.get('/:pollId', function (req, res) {
 
 // Vote once per user. 
 router.put('/:pollId', function (req, res) {
-
-    checkIp(req.params.pollId, req.header('x-forwarded-for'))
+    checkIp(req.params.pollId,  req.headers['x-forwarded-for'])
         .then(function (originalIp) {
-
             if (originalIp) {
-                submitVote(req.body.choice,res,req.header('x-forwarded-for'));
+                submitVote(req.body.choice,res, req.headers['x-forwarded-for']);
             } else {
                 res.json({ message: 'This ip has already voted' });
             }
@@ -76,7 +74,7 @@ router.post('/:pollId', function (req, res) {
 
     if (req.session && req.session.user) {
 
-        checkIp(req.params.pollId, req.header('x-forwarded-for'))
+        checkIp(req.params.pollId, req.headers['x-forwarded-for'])
             .then(function (originalIp) {
 
                 if (originalIp) {
@@ -86,7 +84,7 @@ router.post('/:pollId', function (req, res) {
                         { new: true },
                         function (err, poll) {
                             if (err) console.log(err);
-                           submitVote(req.body.custom,res,req.header('x-forwarded-for'));
+                           submitVote(req.body.custom,res,req.headers['x-forwarded-for']);
                         });
 
                 } else {
@@ -101,6 +99,7 @@ router.post('/:pollId', function (req, res) {
 
 //Function for voting.
 function submitVote(field, res,ip) {
+
     Poll.findOneAndUpdate(
         { choices: { $elemMatch: { title: field } } },
         { $inc: { 'choices.$.count': 1 }, $addToSet: { 'votedIp': ip } },

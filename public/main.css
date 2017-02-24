@@ -91,10 +91,13 @@ body{
 }
 
 .about{
-    min-height: 100%;
     background-image:url('./bgg.jpg');
     overflow: auto;
+    height:100vh;
+    overflow-y: hidden;
 }
+
+
 
 .about-intro{
     margin-top:60px;
@@ -429,6 +432,18 @@ input:-moz-placeholder {
 
 .created-by{
     margin-top:20px;
+}
+
+@media screen and (max-width: 1026px){
+
+    .pic-intro-container{
+        text-align: center;
+    }
+
+    .about-intro{
+       min-width: 75%;
+    }
+
 }
 
 
