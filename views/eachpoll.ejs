@@ -1,0 +1,127 @@
+<% include header.ejs %>
+    <% include nav.ejs %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+
+        <section class="polls">
+            <div class="main-aligner">
+
+                <div class="headings-container">
+                    <h1>
+                        <%=thisPoll.title%>
+                    </h1>
+                    <p>To ensure accurate results, you can only vote once per poll.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                    <div class="options-container">
+                        <% for(let i=0;i<thisPoll.choices.length;i++){ %>
+                        <div class="choice-container">
+                            <p id="<%=thisPoll.choices[i].title%>"><%=thisPoll.choices[i].title %></p>
+                        </div>
+                        <%}%>
+
+                    </div>
+                        <% if(authenticated){ %>
+                    <div class="custom-form-container">
+                            <div id="custom-form"> 
+                                <input required maxlength="40" placeholder="Custom Option" id="custom" type="text" name="custom">
+                                <div class="vote-container">
+                                    <span id="vote-button">Vote</span>
+                                </div>
+                            </div>
+                    </div>
+                        <%}%>
+                </div>
+            <script>
+           
+                let choicesArray = [];
+                let choicesCount = [];
+                let colorsArray = addColor();
+    
+                let data = <%- JSON.stringify(thisPoll.choices) %>; 
+                let id =  <%- JSON.stringify(thisPoll._id) %>               
+         
+                $('.choice-container p').click(function(){
+                
+                    $.ajax({
+                        url: '/polls/' + id,
+                        type: 'PUT',
+                        data: "choice="+$(this).attr('id'),
+                        success: function(result) {
+                            if(result.updated){
+                                location.reload();
+                            }else{
+                                alert(result.message)
+                            }
+                        }
+                    });
+                });
+
+                $('#vote-button').click(function(){
+                    if($('#custom').val() === ""){
+                        alert('You can\'t have a blank option!');
+                        return;
+                    }
+                    $.ajax({
+                        url: '/polls/' + id,
+                        type: 'POST',
+                        data: "custom="+$('#custom').val(),
+                        success: function(result) {
+                            if(result.updated){
+                                location.reload();
+                            }else{
+                                alert(result.message)
+                            }
+                        }
+                    });
+                });
+
+                function addColor(){
+                let arr = [];
+                function rgb(){
+                    return Math.floor(Math.random() * 256);
+                }                        
+                 for(let i=0;i<10;i++){
+                    function a(){
+                        return Math.random().toFixed(1);
+                    }  
+                     arr.push('rgba('+rgb()+','+rgb()+','+rgb()+','+a()+')')
+                    }
+                 return arr;
+                 }
+
+                          
+                data.map(function(choice){choicesArray.push(choice.title)});
+                data.map(function(number){choicesCount.push(number.count)});
+                          
+    
+                let canvas = document.getElementById("myChart");
+            
+                var myChart = new Chart(canvas, {
+                                type: 'pie',
+                                data: {
+                                    labels: choicesArray,
+                                    datasets: [{
+                                        data:choicesCount,
+                                        backgroundColor: colorsArray,
+                                        borderWidth: 0.5
+                                    }]
+                                },
+                                options:{
+                                    maintainAspectRatio: true,
+                                    responsive:true,
+                                    layout:{
+                                        padding:{
+                                            left:10,
+                                            top:200
+                                        }
+                                    }
+                                }
+                            });
+                                               
+                </script>
+            </div>
+        </section>
+
+
+        <% include footer.ejs %>
