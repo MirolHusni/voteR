@@ -94,6 +94,7 @@ body{
     background-image:url('./bgg.jpg');
     overflow: auto;
     overflow-y: hidden;
+    min-height:100%;
 }
 
 
