@@ -59,7 +59,7 @@ router.get('/:pollId', function (req, res) {
 // Vote once per user. 
 router.put('/:pollId', function (req, res) {
 
-    checkIp(req.params.pollId, 'Some ip')
+    checkIp(req.params.pollId, req.header('x-forwarded-for'))
         .then(function (originalIp) {
 
             if (originalIp) {
