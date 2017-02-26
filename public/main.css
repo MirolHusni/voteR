@@ -31,6 +31,14 @@ body{
     margin:0 auto;
 }
 
+.mobile-nav{
+    display:none;
+}
+
+.bar-holder{
+    display:none
+}
+
 .main-nav{
     list-style: none;
     height:auto;
@@ -49,9 +57,10 @@ body{
     padding:20px;
 }
 
-.main-nav a:focus{
-     background-color:#222222;
+.active-class{
+    background-color:#222222;
 }
+
 
 .main-nav a:hover{
      color:#fff;
@@ -330,6 +339,10 @@ input:-moz-placeholder {
     margin-bottom:1em;
 }
 
+.new-poll-container{
+    display:inline-block;
+}
+
 .new-poll{
     border-radius:50%;
     width:300px;
@@ -444,6 +457,77 @@ input:-moz-placeholder {
        min-width: 75%;
     }
 
+}
+
+@media screen and (max-width: 779px){
+   .new-poll-container{
+    display:block;
+    text-align: center;
+   } 
+}
+
+@media screen and (min-width: 600px){
+    .mobile-nav{
+        display:none !important;
+    }
+}
+
+@media screen and (max-width: 600px){
+
+    #signup{
+        transform:scale(0.88);
+    }
+
+    .nav-bar .main-nav{
+        display: none;
+    }
+
+     .nav-bar .register{
+        display: none;
+     }
+
+     .bar-holder{
+        text-align: center;   
+        color:#999999;
+        display:block;
+        padding:11px 0;
+     }
+
+
+    #bar:hover{
+        color:#FFF
+    }
+
+    #bar{
+        cursor:pointer;
+        padding-bottom:4px;
+    }
+
+    .mobile-nav{
+        display:none;
+        list-style: none;
+        height:auto;
+        padding-top:15px;
+        text-align:center;
+    }
+
+    .mobile-nav li{
+        border-top:1px solid #999999;
+        padding:3px 0;
+    }
+
+    .mobile-nav a{
+        text-decoration: none;
+        color: #999999;
+    }
+    .mobile-nav a:hover{
+        color:#fff;
+        cursor: pointer;
+    }
+
+    .mobile-nav li:hover{
+        background-color:#222222;
+    }
 }
 
 

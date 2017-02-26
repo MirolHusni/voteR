@@ -39,9 +39,7 @@
                 let colorsArray = addColor();
     
                 let data = <%- JSON.stringify(thisPoll.choices) %>; 
-                let id =  <%- JSON.stringify(thisPoll._id) %>   
-
-    
+                let id =  <%- JSON.stringify(thisPoll._id) %>          
             
                 $('.choice-container p').click(function(){
                
@@ -96,9 +94,8 @@
                 data.map(function(choice){choicesArray.push(choice.title)});
                 data.map(function(number){choicesCount.push(number.count)});
                           
-    
                 let canvas = document.getElementById("myChart");
-            
+                
                 var myChart = new Chart(canvas, {
                                 type: 'pie',
                                 data: {

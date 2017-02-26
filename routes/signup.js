@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
             // res.json({message:'This username exist'})
             res.render('signup', {
                 error: true,
-                errorMessage: 'This username exists',
+                errorMessage: 'This username already exists',
                 authenticated: false
             });
         }

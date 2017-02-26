@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
             }
         });
     } else {
-        res.status(401)
+        res.status(401).send('You need to be authorized to access this page!')
     }
 });
 
