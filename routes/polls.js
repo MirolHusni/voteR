@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Poll = require('../models/polls.model');
 const checkIp = require('../checkIp');
-const config = require('../config');
+
 
 
 //Get All Polls 
@@ -74,10 +74,10 @@ router.delete('/:pollId',function(req,res){
 
 // Vote once per user. 
 router.put('/:pollId', function (req, res) {
-    checkIp(req.params.pollId, config.ip)
+    checkIp(req.params.pollId, req.headers['x-forwarded-for'])
         .then(function (originalIp) {
             if (originalIp) {
-                submitVote(req.body.choice,res, config.ip);
+                submitVote(req.body.choice,res, req.headers['x-forwarded-for']);
             } else {
                 res.json({ message: 'This ip has already voted' });
             }
@@ -90,7 +90,7 @@ router.post('/:pollId', function (req, res) {
 
     if (req.session && req.session.user) {
 
-        checkIp(req.params.pollId, config.ip)
+        checkIp(req.params.pollId, req.headers['x-forwarded-for'])
             .then(function (originalIp) {
 
                 if (originalIp) {
@@ -100,7 +100,7 @@ router.post('/:pollId', function (req, res) {
                         { new: true },
                         function (err, poll) {
                             if (err) throw err;
-                           submitVote(req.body.custom,res,config.ip);
+                           submitVote(req.body.custom,res,req.headers['x-forwarded-for']);
                         });
 
                 } else {
