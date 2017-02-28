@@ -16,16 +16,20 @@ router.get('/', function (req, res) {
 
 //Send create poll data and save new poll.
 router.post('/', function (req, res) {
+
+//Calculate how many choices are being sent.
+    let keys = Object.keys(req.body)
+    let choicesArr = [];
+    for(let i=1;i<keys.length;i++){
+        choicesArr.push({title: req.body[keys[i]]})
+    }
+
     let newPoll = new Poll({
         title: req.body.title,
-        choices: [{ title: req.body.choice1 }, { title: req.body.choice2 }, { title: req.body.choice3 }],
+        choices: choicesArr,
         createdBy: req.session.user.username
     }).save(function (err, poll) {
         if (err) throw err
-        // res.json({
-        //     message: 'New poll created',
-        //     poll: poll
-        // })
         res.redirect('/mypolls')
     });
 });

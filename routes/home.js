@@ -13,7 +13,6 @@ router.get('/', function (req, res) {
     } else {
         res.locals.authenticated = false;   
         res.render('index');
-
     }
 });
 

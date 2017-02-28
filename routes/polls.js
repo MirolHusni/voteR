@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Poll = require('../models/polls.model');
 const checkIp = require('../checkIp');
+const config = require('../config');
 
 
 //Get All Polls 
 router.get('/', function (req, res) {
     if (req.session && req.session.user) {
         Poll.find({}, function (err, polls) {
-            // res.json({ results: polls });
             res.render('polls', {
                 authenticated: true,
                 allPolls: polls
@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
         });
     } else {
         Poll.find({}, function (err, polls) {
-            // res.json({ results: polls });
+           
             res.render('polls', {
                 authenticated: false,
                 allPolls: polls
@@ -33,11 +33,18 @@ router.get('/:pollId', function (req, res) {
                 res.sendStatus(404);
                 return;
             }
-            // res.json({ pollTitle: poll.title });
+            if(poll.createdBy === req.session.user.username){
+                res.render('eachpoll',{
+                    thisPoll: poll,
+                    authenticated:true,
+                    isUserPoll:true
+                })
+            }
             res.render('eachpoll', {
                 thisPoll: poll,
                 authenticated: true,
-            })
+                isUserPoll:false
+            });
         });
     } else {
         Poll.findById(req.params.pollId, function (err, poll) {
@@ -49,19 +56,28 @@ router.get('/:pollId', function (req, res) {
             res.render('eachpoll', {
                 thisPoll: poll,
                 authenticated: false,
+                isUserPoll:false
             })
         });
     }
 });
 
 
+//Delete User created poll
+router.delete('/:pollId',function(req,res){
+    Poll.findByIdAndRemove(req.params.pollId,function(err,poll){
+        res.json({message:'Poll Deleted'});
+    });
+});
+
+
 
 // Vote once per user. 
 router.put('/:pollId', function (req, res) {
-    checkIp(req.params.pollId,  req.headers['x-forwarded-for'])
+    checkIp(req.params.pollId, config.ip)
         .then(function (originalIp) {
             if (originalIp) {
-                submitVote(req.body.choice,res, req.headers['x-forwarded-for']);
+                submitVote(req.body.choice,res, config.ip);
             } else {
                 res.json({ message: 'This ip has already voted' });
             }
@@ -74,7 +90,7 @@ router.post('/:pollId', function (req, res) {
 
     if (req.session && req.session.user) {
 
-        checkIp(req.params.pollId, req.headers['x-forwarded-for'])
+        checkIp(req.params.pollId, config.ip)
             .then(function (originalIp) {
 
                 if (originalIp) {
@@ -83,8 +99,8 @@ router.post('/:pollId', function (req, res) {
                         { $push: { choices: { title: req.body.custom } } },
                         { new: true },
                         function (err, poll) {
-                            if (err) console.log(err);
-                           submitVote(req.body.custom,res,req.headers['x-forwarded-for']);
+                            if (err) throw err;
+                           submitVote(req.body.custom,res,config.ip);
                         });
 
                 } else {
@@ -97,6 +113,8 @@ router.post('/:pollId', function (req, res) {
         res.status(401).send('You must be a member to view this page.')
     }
 });
+
+
 
 
 //Function for voting.

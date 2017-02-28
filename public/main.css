@@ -18,6 +18,12 @@ body{
     max-width:100%;
 }
 
+.repo-link{
+    color:#fff;
+    text-decoration:none;
+    cursor: pointer;
+}
+
 .nav-bar{
     background:#5c5c5c;
     max-height:100%;
@@ -306,6 +312,45 @@ input:-moz-placeholder {
     clear: both;
 }
 
+#add-button{
+        width: 100%;
+    margin-top: 20px;
+    padding: 15px 0;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+        background: -moz-linear-gradient(
+        top,
+        #b9c5dd 0%,
+        #a4b0cb);
+    background: -webkit-gradient(
+        linear, left top, left bottom, 
+        from(#b9c5dd),
+        to(#a4b0cb));
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #737b8d;
+    -moz-box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    -webkit-box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    box-shadow:
+        0px 5px 5px rgba(000,000,000,0.1),
+        inset 0px 1px 0px rgba(255,255,255,0.5);
+    text-shadow:
+        0px 1px 3px rgba(000,000,000,0.3),
+        0px 0px 0px rgba(255,255,255,0);
+    display: table;
+    position: static;
+    clear: both;
+}
+
 #signup .inputs #submit:hover {
     cursor: pointer;
 }
@@ -431,6 +476,16 @@ input:-moz-placeholder {
 
 #vote-button{
     background-color: #0055cc;
+    padding: 8px;
+    border-radius: 5px;
+    border:none;
+    outline:none;
+    color:white;
+    cursor: pointer;
+}
+
+#delete-button{
+    background-color:#b30000;
     padding: 8px;
     border-radius: 5px;
     border:none;
