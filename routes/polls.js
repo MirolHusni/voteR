@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
         });
     } else {
         Poll.find({}, function (err, polls) {
-           
+
             res.render('polls', {
                 authenticated: false,
                 allPolls: polls
@@ -33,18 +33,19 @@ router.get('/:pollId', function (req, res) {
                 res.sendStatus(404);
                 return;
             }
-            if(poll.createdBy === req.session.user.username ||req.session.user){
-                res.render('eachpoll',{
+            if (poll.createdBy === req.session.user.username || req.session.user) {
+                res.render('eachpoll', {
                     thisPoll: poll,
-                    authenticated:true,
-                    isUserPoll:true
+                    authenticated: true,
+                    isUserPoll: true
                 })
+            } else {
+                res.render('eachpoll', {
+                    thisPoll: poll,
+                    authenticated: true,
+                    isUserPoll: false
+                });
             }
-            res.render('eachpoll', {
-                thisPoll: poll,
-                authenticated: true,
-                isUserPoll:false
-            });
         });
     } else {
         Poll.findById(req.params.pollId, function (err, poll) {
@@ -56,7 +57,7 @@ router.get('/:pollId', function (req, res) {
             res.render('eachpoll', {
                 thisPoll: poll,
                 authenticated: false,
-                isUserPoll:false
+                isUserPoll: false
             })
         });
     }
@@ -64,9 +65,9 @@ router.get('/:pollId', function (req, res) {
 
 
 //Delete User created poll
-router.delete('/:pollId',function(req,res){
-    Poll.findByIdAndRemove(req.params.pollId,function(err,poll){
-        res.json({message:'Poll Deleted'});
+router.delete('/:pollId', function (req, res) {
+    Poll.findByIdAndRemove(req.params.pollId, function (err, poll) {
+        res.json({ message: 'Poll Deleted' });
     });
 });
 
@@ -77,7 +78,7 @@ router.put('/:pollId', function (req, res) {
     checkIp(req.params.pollId, req.headers['x-forwarded-for'])
         .then(function (originalIp) {
             if (originalIp) {
-                submitVote(req.body.choice,res, req.headers['x-forwarded-for']);
+                submitVote(req.body.choice, res, req.headers['x-forwarded-for']);
             } else {
                 res.json({ message: 'This ip has already voted' });
             }
@@ -100,7 +101,7 @@ router.post('/:pollId', function (req, res) {
                         { new: true },
                         function (err, poll) {
                             if (err) throw err;
-                           submitVote(req.body.custom,res,req.headers['x-forwarded-for']);
+                            submitVote(req.body.custom, res, req.headers['x-forwarded-for']);
                         });
 
                 } else {
@@ -109,7 +110,7 @@ router.post('/:pollId', function (req, res) {
 
 
             });
-    }else{
+    } else {
         res.status(401).send('You must be a member to view this page.')
     }
 });
@@ -118,7 +119,7 @@ router.post('/:pollId', function (req, res) {
 
 
 //Function for voting.
-function submitVote(field, res,ip) {
+function submitVote(field, res, ip) {
 
     Poll.findOneAndUpdate(
         { choices: { $elemMatch: { title: field } } },
