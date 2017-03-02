@@ -27,7 +27,7 @@ router.post('/', function (req, res) {
     let newPoll = new Poll({
         title: req.body.title,
         choices: choicesArr,
-        createdBy: req.session.user.username
+        createdBy: req.session.user.username || req.session.user
     }).save(function (err, poll) {
         if (err) throw err
         res.redirect('/mypolls')

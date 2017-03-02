@@ -4,7 +4,7 @@ const Polls = require('../models/polls.model')
 
 router.get('/', function (req, res) {
     if (req.session && req.session.user) {
-        Polls.find({ createdBy: req.session.user.username }, function (err, poll) {
+        Polls.find({ createdBy: req.session.user.username ||req.session.user }, function (err, poll) {
             if (poll.length === 0) {
                 console.log(poll)
                 res.redirect('/createpoll')

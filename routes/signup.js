@@ -11,7 +11,7 @@ router.get('/', function (req, res) {
     }
 });
 
-//Save new unique users to database if username is unique.
+//Save new users to database if username is unique.
 router.post('/', function (req, res) {
 
     User.findOne({ username: req.body.username }, function (err, user) {
@@ -21,12 +21,9 @@ router.post('/', function (req, res) {
                 password: req.body.password
             }).save(function (err, user) {
                 req.session.user = user; //Set cookies 
-                // res.json({retrievedUser:user.username})
-                // res.redirect('createpoll')
                 res.redirect('/');
             });
         } else {
-            // res.json({message:'This username exist'})
             res.render('signup', {
                 error: true,
                 errorMessage: 'This username already exists',

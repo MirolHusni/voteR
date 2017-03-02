@@ -13,7 +13,7 @@
                     <a href="/polls">Polls</a>
                 </li>
                 <li>
-                    <a href="mypolls">My Polls</a>
+                    <a href="/mypolls">My Polls</a>
                 </li>
                 <li>
                     <a href="/createpoll">Create Poll</a>
@@ -68,13 +68,9 @@
                     </li>
                 </ul>
                 <%} %>
+
                     <% if(authenticated){ %>
                         <ul class="register">
-                            <li>
-                                <a id="git" href="https://github.com/Mozar10" target="_blank">
-                                    <i class="fa fa-2x fa-github" aria-hidden="true"></i>
-                                </a>
-                            </li>
                             <li>
                                 <a href="/logout">Logout</a>
                             </li>
@@ -83,7 +79,7 @@
                         <% }else{ %>
                             <ul class="register">
                                 <li>
-                                    <a id="git" href="https://github.com/Mozar10" target="_blank">
+                                    <a id="git" href="https://github.com/login/oauth/authorize?scope=public&state=dsASFEjasDfe324rr&client_id=24c96c93f4efd54cdc37" >
                                         <i class="fa fa-2x fa-github" aria-hidden="true"></i>
                                     </a>
                                 </li>

@@ -8,6 +8,7 @@ const polls = require('./routes/polls');
 const myPolls = require('./routes/mypolls');
 const createPoll = require('./routes/createpoll');
 const signUp = require('./routes/signup');
+const authCallack = require('./routes/callback');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
 const app = express();
@@ -25,13 +26,14 @@ db.once('open', function () {
 //View engine
 app.set('view engine', 'ejs');
 
-//Middleware
+//Local Authentication.
 app.use(express.static('public'));
 app.use(session({
   cookieName: 'session',
   secret: 'asfasFHDFDHJDFJr5e4rwrsefzawq4',
   duration: 30 * 60 * 1000,
 }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -41,9 +43,10 @@ app.use('/polls', polls);
 app.use('/createpoll', createPoll);
 app.use('/mypolls',myPolls);
 app.use('/signup', signUp);
+app.use('/callback',authCallack);
 app.use('/login', login);
 app.use('/logout', logout);
 
 app.listen(config.port);
 
-module.exports = app;
+module.exports = app; 

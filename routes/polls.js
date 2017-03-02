@@ -33,7 +33,7 @@ router.get('/:pollId', function (req, res) {
                 res.sendStatus(404);
                 return;
             }
-            if(poll.createdBy === req.session.user.username){
+            if(poll.createdBy === req.session.user.username ||req.session.user){
                 res.render('eachpoll',{
                     thisPoll: poll,
                     authenticated:true,
