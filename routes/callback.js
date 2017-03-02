@@ -31,7 +31,7 @@ router.get('/', function (req, res) {
             client_id: process.env.client_id,
             client_secret: process.env.client_secret,
             code: code,
-            redirect_uri: 'http://localhost:3000/callback',
+            redirect_uri: 'http://voter-application.herokuapp.com/callback',
             state: state
         }
 
