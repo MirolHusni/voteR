@@ -47,6 +47,7 @@ app.use('/callback',authCallack);
 app.use('/login', login);
 app.use('/logout', logout);
 
+
 app.listen(config.port);
 
 module.exports = app; 
